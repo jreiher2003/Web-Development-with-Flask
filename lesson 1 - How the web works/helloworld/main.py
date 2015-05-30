@@ -6,7 +6,7 @@ app.config['DEBUG'] = True
 # the App Engine WSGI application server.
 form = """
 <form action="/testform" method="POST">
-	<input name="name">
+	<input name="q">
 	<input type="submit">
 </form>
 """
@@ -21,7 +21,7 @@ def hello():
 @app.route('/testform', methods=['GET', 'POST'])
 def TestHandler():
 	if request.method == 'POST':
-		name = request.form['name']
+		name = request.form['q']
 		response = make_response(name)
 		return response
 	else:
