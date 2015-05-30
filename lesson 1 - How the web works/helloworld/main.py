@@ -27,6 +27,10 @@ def TestHandler():
 	else:
 		return url_for('hello')
 
+@app.route('/lesson2')
+def lesson2():
+	return render_template('play.html')
+
 
 @app.errorhandler(404)
 def page_not_found(e):
