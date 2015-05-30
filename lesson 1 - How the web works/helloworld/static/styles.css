@@ -1,0 +1,122 @@
+* {
+    border: 1px solid red !important;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.grid {
+    margin: 0 auto;
+    max-width: 1200px;
+    width: 100%;
+}
+
+.row {
+    width: 100%;
+    margin-bottom: 20px;
+    display: flex;
+}
+
+.col-1 {
+    width: 8.33%;
+}
+
+.col-2 {
+    width: 16.66%;
+}
+
+.col-3 {
+    width: 25%;
+}
+
+.col-4 {
+    width: 33.33%;
+}
+
+.col-5 {
+    width: 41.66%;
+}
+
+.col-6 {
+    width: 50%;
+}
+
+.col-7 {
+    width: 58.33%;
+}
+
+.col-8 {
+    width: 66.66%;
+}
+
+.col-9 {
+    width: 75%;
+}
+
+.col-10 {
+    width: 83.33%;
+}
+
+.col-11 {
+    width: 91.66%;
+}
+
+.col-12 {
+    width: 100%;
+}
+
+/* styles for app */
+html {
+
+	font-size: 100%;
+	font-family: sans-serif;
+}
+
+
+
+
+#logo {
+	
+	font-style: oblique;
+	font-size: 25px;
+	text-align: left;
+}
+
+.horizontalRule {
+    clear:both;
+    width:100%;
+    background-color:#d1d1d1;
+    height:1px;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+.sun {
+}
+
+.form-box {
+	 border: 8px solid #7F756F ;
+	 padding: 50px;
+}
+
+form {
+	 margin: 0 auto;
+	
+}
+input {
+	display: block;
+	margin: 8px 0 8px 0;
+	padding: 2px;
+}
+
+#small {
+	font-size: 10px;
+}
+
+.topform {
+	text-align: center;
+}
