@@ -26,7 +26,16 @@ def valid_day(day):
 	else:
 		return None
 
-print valid_day(0)
-print valid_day('1')
-print valid_day(14)
-print valid_day('300')
+# print valid_day(0)
+# print valid_day('1')
+# print valid_day(14)
+# print valid_day('300')
+def valid_year(year):
+	year = int(year)
+	if year >=1900 and year <= 2020: return year
+	else:  return None 
+
+print valid_year('0')
+print valid_year('1950')
+print valid_year('-11')
+print valid_year('2000')
