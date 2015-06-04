@@ -35,6 +35,10 @@ def TestHandler():
 	else:
 		return url_for('hello')
 
+@app.route('/confirm')
+def confirm():
+	return render_template('confirm.html')
+
 # birthday validation
 @app.route('/birthday', methods=['GET','POST'])
 def birthday():
@@ -46,6 +50,7 @@ def birthday():
 		user_month = valid_month(request.form['month'])
 		user_day = valid_day(request.form['day'])
 		user_year = valid_year(request.form['year'])
+		
 
 		if not (user_month and user_day and user_year): # don't forget () won't work without it
 			if user_month is None or user_day is None or user_year is None:
@@ -54,9 +59,8 @@ def birthday():
 				user_year = request.form['year']
 			flash('error you did not fill out the form correctly')
 			return render_template('birthday.html', month=user_month, day=user_day, year=user_year)
-		else:
-			return "Thanks that is a totally valid day"
-		
+		return redirect(url_for('confirm'))	
+	
 
 
 
