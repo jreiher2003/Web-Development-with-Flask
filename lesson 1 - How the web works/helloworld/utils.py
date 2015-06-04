@@ -6,9 +6,8 @@ monthdict= dict((m[:3].lower(),m) for m in months)
 # print dir(short_month)
 
 def valid_month(month):
-	
 	short_month = month[:3].lower()
-	print short_month
+	# print short_month
 	if short_month in monthdict.keys():
 		return monthdict.get(short_month) # get method retrieves values from dicts
 
@@ -17,14 +16,9 @@ def valid_month(month):
 ## February
 
 def valid_day(day):
-	if type(day) == int:
-		day = day
-	elif type(day) == str:
-		day = int(day)
-	if day >= 1 and day <= 31:
-		return day
-	else:
-		return None
+	day = int(day)
+	if day >= 1 and day <= 31: return day
+	else:  return None		
 
 # print valid_day(0)
 # print valid_day('1')
@@ -35,7 +29,7 @@ def valid_year(year):
 	if year >=1900 and year <= 2020: return year
 	else:  return None 
 
-print valid_year('0')
-print valid_year('1950')
-print valid_year('-11')
-print valid_year('2000')
+# print valid_year('0')
+# print valid_year('1950')
+# print valid_year('-11')
+# print valid_year('2000')
