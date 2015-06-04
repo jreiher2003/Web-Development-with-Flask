@@ -4,18 +4,18 @@
 <title>birthday</title>
 </head>
 <body>
-
+	
 <form action="/birthday" method="POST">
 	What is your birthday?
 	<br>
 	<label>Month
-	<input type="text" name="month">
+	<input type="text" name="month" value="{{ month }}">
 	</label>
 	<label>Day
-	<input type="text" name="day">
+	<input type="text" name="day" value="{{ day }}">
 	</label>
 	<label>Year
-	<input type="text" name="year">
+	<input type="text" name="year" value="{{ year }}">
 	</label>
 	<br>
 	<br>

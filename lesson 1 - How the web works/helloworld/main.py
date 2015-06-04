@@ -48,8 +48,10 @@ def birthday():
 		user_year = valid_year(request.form['year'])
 
 		if not (user_month and user_day and user_year): # don't forget () won't work without it
-			flash('error you forgot to fill out the form')
-			return render_template('birthday.html')
+			if user_month is None:
+				user_month = request.form['month'] 
+			flash('error you did not fill out the form correctly')
+			return render_template('birthday.html', month=user_month, day=user_day, year=user_year)
 		else:
 			return "Thanks that is a totally valid day"
 		
