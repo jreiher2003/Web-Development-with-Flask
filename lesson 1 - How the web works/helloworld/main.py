@@ -1,4 +1,6 @@
 from flask import Flask, render_template, make_response, request, redirect, url_for
+from utils import valid_month, valid_day, valid_month
+
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
@@ -53,11 +55,21 @@ def TestHandler():
 # birthday validation
 @app.route('/birthday', methods=['GET','POST'])
 def birthday():
-	if request.method == 'POST':
-		return "Thanks that is a totally valid day"
-	else:	
+	if request.method == "GET":
 		response = make_response(form2)
-		return response
+		return response 
+
+	if request.method == 'POST':
+		user_month = request.form['month']
+		user_day = request.form['day']
+		user_year = request.form['year']
+
+		if not (user_month and user_day and user_year): # don't forget () won't work without it
+			response = make_response(form2)
+			return response
+		else:
+			return "Thanks that is a totally valid day"
+		
 
 
 
