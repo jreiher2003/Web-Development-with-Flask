@@ -16,18 +16,22 @@ def valid_month(month):
 ## February
 
 def valid_day(day):
-	day = int(day)
-	if day >= 1 and day <= 31: return day
-	else:  return None		
+	if day and day.isdigit:
+		day = int(day)
+		if day >= 1 and day <= 31: return day
+		else:  return None	
+	return None	
 
 # print valid_day(0)
 # print valid_day('1')
 # print valid_day(14)
 # print valid_day('300')
 def valid_year(year):
-	year = int(year)
-	if year >=1900 and year <= 2020: return year
-	else:  return None 
+	if year and year.isdigit:
+		year = int(year)
+		if year >=1900 and year <= 2020: return year
+		else:  return None 
+	return None
 
 # print valid_year('0')
 # print valid_year('1950')
