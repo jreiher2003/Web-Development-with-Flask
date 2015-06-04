@@ -12,25 +12,7 @@ form = """
 	<input type="submit">
 </form>
 """
-# birthday validation
-form2 = """
-<form action="/birthday" method="POST">
-	What is your birthday?
-	<br>
-	<label>Month
-	<input type="text" name="month">
-	</label>
-	<label>Day
-	<input type="text" name="day">
-	</label>
-	<label>Year
-	<input type="text" name="year">
-	</label>
-	<br>
-	<br>
-	<input type="submit">
-</form>
-"""
+
 
 @app.route('/')
 def hello():
@@ -56,8 +38,7 @@ def TestHandler():
 @app.route('/birthday', methods=['GET','POST'])
 def birthday():
 	if request.method == "GET":
-		response = make_response(form2)
-		return response 
+		return render_template('birthday.html') 
 
 	if request.method == 'POST':
 		# functions on data in form
@@ -66,8 +47,7 @@ def birthday():
 		user_year = valid_year(request.form['year'])
 
 		if not (user_month and user_day and user_year): # don't forget () won't work without it
-			response = make_response(form2)
-			return response
+			return render_template('birthday.html')
 		else:
 			return "Thanks that is a totally valid day"
 		
