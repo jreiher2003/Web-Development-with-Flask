@@ -1,7 +1,8 @@
-from flask import Flask, render_template, make_response, request, redirect, url_for
+from flask import Flask, render_template, make_response, request, redirect, url_for, flash
 from utils import valid_month, valid_day, valid_year
 
 app = Flask(__name__)
+app.secret_key = 'super_secret_key'
 app.config['DEBUG'] = True
 
 # Note: We don't need to call run() since our application is embedded within
@@ -47,6 +48,7 @@ def birthday():
 		user_year = valid_year(request.form['year'])
 
 		if not (user_month and user_day and user_year): # don't forget () won't work without it
+			flash('error you forgot to fill out the form')
 			return render_template('birthday.html')
 		else:
 			return "Thanks that is a totally valid day"
