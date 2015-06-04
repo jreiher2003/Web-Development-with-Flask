@@ -1,5 +1,5 @@
 from flask import Flask, render_template, make_response, request, redirect, url_for
-from utils import valid_month, valid_day, valid_month
+from utils import valid_month, valid_day, valid_year
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -60,9 +60,10 @@ def birthday():
 		return response 
 
 	if request.method == 'POST':
-		user_month = request.form['month']
-		user_day = request.form['day']
-		user_year = request.form['year']
+		# functions on data in form
+		user_month = valid_month(request.form['month'])
+		user_day = valid_day(request.form['day'])
+		user_year = valid_year(request.form['year'])
 
 		if not (user_month and user_day and user_year): # don't forget () won't work without it
 			response = make_response(form2)
