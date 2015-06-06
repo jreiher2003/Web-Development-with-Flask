@@ -13,26 +13,29 @@
 		<div class="col-6 middle">
 	
 	<h2>What is your birthday?</h2>
-<form action="/birthday" method="POST">
-	<br>
-	<label>Month</label>
-	<input type="text" name="month" value="{{ month }}">
-	<label>Day</label>
-	<input type="text" name="day" value="{{ day }}">
-	<label>Year</label>
-	<input type="text" name="year" value="{{ year }}">
-	<br>
-	<br>
-	<input type="submit" value="Validate">
-</form>
+	
 {% with messages = get_flashed_messages() %}
 	{% if messages %}
 	<ul class="Flashes">
 		{% for message in messages %}
 		<li>{{ message }}</li>
+	</ul>
 		{% endfor %}
 	{% endif %}
 {% endwith %}
+
+<form action="/birthday" method="POST">
+	<br>
+	<p>Month
+	<input type="text" name="month" value="{{ month }}" placeholder="enter a valid month"></p>
+	<p>Day
+	<input type="text" name="day" value="{{ day }}" placeholder="enter a valid day"></p>
+	<p>Year
+	<input type="text" name="year" value="{{ year }}" placeholder="enter a valid year"></p>
+	<br>
+	<br>
+	<input type="submit" value="Validate">
+</form>
 		</div>
 		<div class="col-3"></div>
 	</div>
