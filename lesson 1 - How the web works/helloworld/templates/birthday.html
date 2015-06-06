@@ -2,24 +2,28 @@
 <html>
 <head>
 <title>birthday</title>
+	<link rel="stylesheet" type="text/css" href="static/styles1.css">
 </head>
 <body>
+
+<div class="grid">
+	<div class="row"><div class="col-12 headers"></div></div>
+	<div class="row">
+		<div class="col-3"></div>
+		<div class="col-6 middle">
 	
+	<h2>What is your birthday?</h2>
 <form action="/birthday" method="POST">
-	What is your birthday?
 	<br>
-	<label>Month
+	<label>Month</label>
 	<input type="text" name="month" value="{{ month }}">
-	</label>
-	<label>Day
+	<label>Day</label>
 	<input type="text" name="day" value="{{ day }}">
-	</label>
-	<label>Year
+	<label>Year</label>
 	<input type="text" name="year" value="{{ year }}">
-	</label>
 	<br>
 	<br>
-	<input type="submit">
+	<input type="submit" value="Validate">
 </form>
 {% with messages = get_flashed_messages() %}
 	{% if messages %}
@@ -29,5 +33,9 @@
 		{% endfor %}
 	{% endif %}
 {% endwith %}
+		</div>
+		<div class="col-3"></div>
+	</div>
+</div>
 </body>
 </html>
