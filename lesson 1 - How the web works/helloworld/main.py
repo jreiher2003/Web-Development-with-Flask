@@ -57,7 +57,7 @@ def birthday():
 				user_month = request.form['month'] 
 				user_day = request.form['day']
 				user_year = request.form['year']
-			flash('error you did not fill out the form correctly')
+			flash('error you did not provide a valid date')
 			return render_template('birthday.html', month=user_month, day=user_day, year=user_year)
 		return redirect(url_for('confirm'))	
 	
