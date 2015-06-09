@@ -2,6 +2,7 @@
 
 # Import the Flask Framework
 from flask import Flask, render_template, url_for, redirect, request
+from utils import valid_username, valid_password, valid_email
 app = Flask(__name__)
 # Note: We don't need to call run() since our application is embedded within
 # the App Engine WSGI application server.
@@ -24,6 +25,10 @@ def rot13():
 
 			return render_template('rot13.html', rots=rots)
 	
+@app.route('/signup', methods=["GET", "POST"])
+def signup():
+	if request.method == 'GET':
+		return render_template('signup.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
