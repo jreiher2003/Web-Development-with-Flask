@@ -1,9 +1,11 @@
 """`main` is the top level module for your Flask application."""
 
 # Import the Flask Framework
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, url_for, redirect, request, flash
 from utils import valid_username, valid_password, valid_email
 app = Flask(__name__)
+app.secret_key = 'super_secret_key'
+app.config['DEBUG'] = True
 # Note: We don't need to call run() since our application is embedded within
 # the App Engine WSGI application server.
 
@@ -24,11 +26,35 @@ def rot13():
 			rots = rot.encode('rot13')
 
 			return render_template('rot13.html', rots=rots)
+
+@app.route('/welcome')
+def welcome(username):
+	return render_template('welcome.html', username=username)
 	
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
 	if request.method == 'GET':
 		return render_template('signup.html')
+
+	if request.method == 'POST':
+		username = valid_username(request.form['username'])
+		password = valid_password(request.form['password'])
+		vpw = valid_password(request.form['vpw'])
+		email = valid_email(request.form['email'])
+
+		# if not username:
+		# 	flash("you did not provide a valid username")
+		# if not password:
+		# 	flash("you did not provide a valid password")
+		# if password != vpw:
+		# 	flash("password do not match")
+		# if not email:
+		# 	flash("you did not enter a valid email")
+			# if username is None or password is None or email is None:
+				
+			
+		
+		return redirect(url_for('welcome',username=username))
 
 @app.errorhandler(404)
 def page_not_found(e):
