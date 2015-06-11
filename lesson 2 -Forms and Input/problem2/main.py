@@ -3,6 +3,7 @@
 # Import the Flask Framework
 from flask import Flask, render_template, url_for, redirect, request, flash
 from utils import valid_username, valid_password, valid_email
+import re
 app = Flask(__name__)
 app.secret_key = 'super_secret_key'
 app.config['DEBUG'] = True
@@ -19,17 +20,11 @@ def hello():
 def rot13():
 	if request.method == "GET":
 		return render_template('rot13.html')
-
 	if request.method == 'POST':
 		rot = request.form['text']
 		if rot:
 			rots = rot.encode('rot13')
-
 			return render_template('rot13.html', rots=rots)
-
-@app.route('/welcome')
-def welcome(username):
-	return render_template('welcome.html', username=username)
 	
 @app.route('/signup', methods=["GET", "POST"])
 def signup():
@@ -55,6 +50,11 @@ def signup():
 			
 		
 		return redirect(url_for('welcome',username=username))
+
+@app.route('/welcome/<username>')
+def welcome(username):
+
+	return render_template('welcome.html', username=username)
 
 @app.errorhandler(404)
 def page_not_found(e):
