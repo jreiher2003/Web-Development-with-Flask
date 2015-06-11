@@ -37,18 +37,13 @@ def signup():
 		vpw = valid_password(request.form['vpw'])
 		email = valid_email(request.form['email'])
 
-		# if not username:
-		# 	flash("you did not provide a valid username")
-		# if not password:
-		# 	flash("you did not provide a valid password")
-		# if password != vpw:
-		# 	flash("password do not match")
-		# if not email:
-		# 	flash("you did not enter a valid email")
-			# if username is None or password is None or email is None:
-				
-			
-		
+		if not (username and password and vpw):
+			if username is None or password is None or vpw is None:
+				username = request.form['username']
+				password = request.form['password']
+				vpw = request.form['vpw']
+			flash('error on the play')
+			return render_template('signup.html', username=username, password=password, vpw=vpw)
 		return redirect(url_for('welcome',username=username))
 
 @app.route('/welcome/<username>')
