@@ -6,13 +6,8 @@ app = Flask(__name__)
 
 @app.route("/", methods=['GET', 'POST'])
 def hello():
+	items = ''
 	if request.method == 'GET':
-		n = 15
-		return render_template('index.html', n=n)
+		return render_template('index.html', items=items)
 
-	if request.method == "POST":
-		n = request.form['name']
-		return redirect('hello', n=n)
-
-if __name__ == "__main__":
-	app.run()
+	
