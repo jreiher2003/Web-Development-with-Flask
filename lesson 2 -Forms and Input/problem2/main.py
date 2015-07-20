@@ -42,7 +42,10 @@ def signup():
 				username = request.form['username']
 				password = request.form['password']
 				vpw = request.form['vpw']
-			flash('error on the play')
+			
+
+			flash('You have an error you need to fix son')
+			
 			return render_template('signup.html', username=username, password=password, vpw=vpw)
 		return redirect(url_for('welcome',username=username))
 

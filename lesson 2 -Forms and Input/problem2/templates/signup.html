@@ -5,14 +5,15 @@
 </head>
 <body>
 
+    
 	
 	<form method="POST" action="/signup">
 		
 		<h1>Signup</h1>
 		<label>Username</label>
 		<br>
-
 		<input type="text" name="username" />
+		
 		<br>
 
 		<label>Password</label>
@@ -30,20 +31,22 @@
 		<input type="email" name="email" />
 		<br>
 
+{% with messages = get_flashed_messages() %}
+
+  {% if messages %}
+   
+    {% for message in messages %}
+      				
+		<li>{{ message }}</li>
+		
+
+    {% endfor %}
+  {% endif %}
+{% endwith %}
 		<input type="submit">
 
 	</form>
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-    {% for message in messages %}
-      <li>{{ message }}</li>
-    {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
-{% block body %}{% endblock %}
 
-		
+{% block body %}{% endblock %}
 </body>
 </html>
