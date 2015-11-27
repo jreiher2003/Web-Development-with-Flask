@@ -34,9 +34,14 @@ def main():
 
     return render_template('form.html')
 
-@app.route('/answer')
-def end():
-	return render_template('answer.html')
+
+@app.route('/food/', methods=['POST', 'GET'])
+def food():
+    if request.method == 'POST':
+        items = request.form.getlist('food')
+        return render_template('food.html', items=items)
+    return render_template('food.html')
+
 
 if __name__ == '__main__':
 	app.run(debug=True)

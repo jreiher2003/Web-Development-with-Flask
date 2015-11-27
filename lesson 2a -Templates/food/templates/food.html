@@ -1,0 +1,29 @@
+<html>
+<head>
+	<title>Shopping List</title>
+</head>
+<body>
+
+	<form method="POST">
+		<h1> add a food</h1>
+		<input type="text" name="food">
+		{% if items %}
+			{% for item in items %}
+		<input type="hidden" name="food" value="{{ item }}">
+			{% endfor %}
+		
+		{% endif %}
+		<button>Add</button>
+	</form>
+
+		{% if items %}
+		<h1>Shopping List</h1>
+		<ul>
+			{% for item in items %}
+			<li>{{ item }}</li>
+			{% endfor %}
+		
+		</ul>
+		{% endif %}
+</body>
+</html>
