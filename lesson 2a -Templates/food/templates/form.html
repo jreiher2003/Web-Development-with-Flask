@@ -5,20 +5,13 @@
 </head>
 <body>
     <h1>Fizz Buzz!!</h1>
-    <form method="POST">
+    <form method="POST" action="{{url_for('main')}}">
         <label>
             <span>Rounds:</span>
             <input type='text' name='rounds' />
         </label>
         <input type='submit' value='Play' />
     </form>
-    {% if results %}
-    <h1>Results:</h1>
-    <ul>
-    {% for result in results %}
-        <li>{{ result }}</li>
-    {% endfor %}
-    <ul>
-    {% endif %}
+   
 </body>
 </html>

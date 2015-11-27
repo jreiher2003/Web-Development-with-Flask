@@ -20,19 +20,23 @@ def fizzbuzz(number):
         output.append(value)
     return output
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/')
+def fiz():
+	return render_template('fizzbuzz.html')
+
+@app.route('/fizzbuzz/', methods=['POST', 'GET'])
 def main():
     if request.method == 'POST':
         rounds = request.form['rounds']
         results = fizzbuzz(rounds)
-        return render_template('fizzbuzz.html', results=results)
+        # return render_template('fizzbuzz.html', results=results)
+        return render_template('answer.html', results=results)
 
     return render_template('form.html')
 
-
-@app.route('/fizzbuzz')
-def fiz():
-	return render_template('fizzbuzz.html',results=results)
+@app.route('/answer')
+def end():
+	return render_template('answer.html')
 
 if __name__ == '__main__':
 	app.run(debug=True)
