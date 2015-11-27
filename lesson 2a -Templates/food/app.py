@@ -25,12 +25,14 @@ def main():
     if request.method == 'POST':
         rounds = request.form['rounds']
         results = fizzbuzz(rounds)
-        return render_template('form.html', results=results)
+        return render_template('fizzbuzz.html', results=results)
 
     return render_template('form.html')
 
 
-
+@app.route('/fizzbuzz')
+def fiz():
+	return render_template('fizzbuzz.html',results=results)
 
 if __name__ == '__main__':
 	app.run(debug=True)
