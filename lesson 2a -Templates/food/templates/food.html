@@ -1,10 +1,8 @@
-<html>
-<head>
-	<title>Shopping List</title>
-</head>
-<body>
+{% extends 'base.html' %}
+ {% block title %}Shopping List{% endblock %}
+ {% block content %}
 
-	<form method="POST">
+	<form method="POST" action="{{ url_for('food', items=items) }}">
 		<h1> add a food</h1>
 		<input type="text" name="food">
 		{% if items %}
@@ -25,5 +23,6 @@
 		
 		</ul>
 		{% endif %}
-</body>
-</html>
+
+
+{% endblock %}

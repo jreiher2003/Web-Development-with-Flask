@@ -1,11 +1,11 @@
+ {% extends 'base.html' %}
+ {% block title %}Front Page{% endblock %}
+ {% block content %}
+
  <h1>Fizzbuzz test</h1>
  <a href="{{url_for('main')}}">click here to get started</a>
 
- {% if results %}
-    <h1>Results:</h1>
-    <ul>
-    {% for result in results %}
-        <li>{{ result }}</li>
-    {% endfor %}
-    <ul>
-    {% endif %}
+ <h2>Shopping List</h2>
+ <a href="{{ url_for('food') }}">click here to make shopping list</a>
+
+{% endblock %}

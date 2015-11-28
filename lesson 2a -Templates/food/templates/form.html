@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>FizzBuzz Game</title>
-</head>
-<body>
+{% extends 'base.html' %}
+ {% block title %}FizzBuzz Game{% endblock %}
+ {% block content %}
+
     <h1>Fizz Buzz!!</h1>
     <form method="POST" action="{{url_for('main')}}">
         <label>
@@ -13,5 +11,4 @@
         <input type='submit' value='Play' />
     </form>
    
-</body>
-</html>
+{% endblock %}
