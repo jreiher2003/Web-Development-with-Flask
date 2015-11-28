@@ -21,7 +21,7 @@ The purpose of this project is to practice Udacity's Acsii Chan project with Fla
 
 
 #### First Version  (master)
-flask development web server and sqlalachemy with bootstrap.  This version is just for development and practice using the 3 tech sources.  
+flask development web server and sqlalchemy with bootstrap.  This version is just for development and practice using the 3 tech sources.  
 
 
 #### Second Version  (GAE)
