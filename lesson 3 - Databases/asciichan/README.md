@@ -5,9 +5,11 @@
 
 ## TECH STACK  
 
+Python, Flask, Bootstrap  
+
+
 ---
 
-Python, Flask, Bootstrap  
 
 
 
