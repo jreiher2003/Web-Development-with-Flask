@@ -56,10 +56,14 @@
 				<hr class="hrcolor">
 
 				{% for art in all_art %}
-					{{ art.title }} {{ art.created }}
+				<div class="show__art">
+					<p class="pull-right">{{ art.created }}</p>
+					<h3 class="h3">{{ art.title }}</h3> 
 					<br>
-					{{art.art}}
+					<pre>{{art.art}}</pre>
+						<hr class="hrcolor">
 					<br><br>
+				</div>
 				{% endfor %}
 		</div>
 
