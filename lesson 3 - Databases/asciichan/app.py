@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -25,20 +25,22 @@ session = Session()
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
 	all_art = session.query(Art).order_by(desc('art.created'))
-	if request.method == 'GET':
-		return render_template('front.html', all_art=all_art)
 
 	if request.method == 'POST':
 		title = request.form['title']
 		art = request.form['art']
 		created = date.today()
 		if title and art and created:
-			error = 'need a title and art'
-			success ="Thanks for submitting"
 			newArt = Art(title=title, art=art, created=created)
 			session.add(newArt)
 			session.commit()
+			flash('Thanks for submitting!', 'success')
 			return redirect(url_for('hello_world'))
 
+	if request.method == 'GET':
+		return render_template('front.html', all_art=all_art)
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.secret_key = 'super_secret_key'
+    app.debug = True
+    app.run(host="localhost", port=5000)

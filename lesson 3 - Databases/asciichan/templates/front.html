@@ -37,16 +37,17 @@
 						<button class="btn btn-primary btn-lg" type="submit">Submit</button>
 					</div>
 
-				{% if title and art %}
-				<h2 class="text-success">
-					{{ success }}
-				</h2>
-				<br>
-				{% else %}
-				<h2 class="text-danger">
-					{{ error }}
-				</h2>
-				{% endif %}
+					{% with messages = get_flashed_messages(with_categories=true) %}
+					{% if messages %}
+					{% for category, message in messages %}
+					<div class="alert alert-{{ category }} alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						{{ message }}
+					</div>	
+					{% endfor %}
+					
+					{% endif %}
+					{% endwith %}
 				</form>
 			</div>
 		</div>
