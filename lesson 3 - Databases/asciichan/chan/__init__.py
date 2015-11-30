@@ -1,4 +1,5 @@
 from flask import Flask
 app = Flask(__name__)
-
-from chan import views, models
+app.secret_key = 'super_secret_key'
+# app.debug = True
+from chan import views
