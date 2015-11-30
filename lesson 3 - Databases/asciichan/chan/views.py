@@ -1,23 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
-from sqlalchemy import *
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import date
-
-app = Flask(__name__)
-
-Base = declarative_base()	
+from chan import app
+from models import *
 
 
-class Art(Base):
-	__tablename__ = 'art'
-	id = Column(Integer, Sequence('user_id_seq'), primary_key=True)
-	title = Column(String(250), nullable=False)
-	art = Column(String, nullable=False)
-	created = Column(Date)
 
-engine = create_engine('sqlite:///artwork.db' , echo=True)
-Base.metadata.create_all(engine)
+
 
 Session = sessionmaker(bind=engine)
 session = Session()
@@ -44,8 +33,3 @@ def hello_world():
 
 	if request.method == 'GET':
 		return render_template('front.html', all_art=all_art)
-
-if __name__ == '__main__':
-    app.secret_key = 'super_secret_key'
-    app.debug = True
-    app.run(host="localhost", port=5000)
