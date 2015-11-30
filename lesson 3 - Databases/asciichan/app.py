@@ -30,12 +30,17 @@ def hello_world():
 		title = request.form['title']
 		art = request.form['art']
 		created = date.today()
-		if title and art and created:
+		if title and art:
 			newArt = Art(title=title, art=art, created=created)
 			session.add(newArt)
 			session.commit()
 			flash('Thanks for submitting!', 'success')
 			return redirect(url_for('hello_world'))
+		else:
+			flash('You need both title and artwork', 'danger')
+			return redirect(url_for('hello_world'))
+		
+		
 
 	if request.method == 'GET':
 		return render_template('front.html', all_art=all_art)
