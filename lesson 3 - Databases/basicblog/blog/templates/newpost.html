@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-		<form>
+<div class="row">
+	<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
+		<form method="post">
 			<div class="form-group">
 				<label for="subject1">Subject</label>
 				<input type="text" id="subject1" class="form-control" name="subject">
@@ -10,11 +11,13 @@
 
 			<div clss="form-group">
 				<label for="blog1">Blog Entry</label>
-				<textarea type="text" id="blog1" class="form-control" name="blog"></textarea>
+				<textarea type="text" id="blog1" class="form-control" rows="8" name="blog"></textarea>
 			</div>
 
-			<input class="btn btn-default" type="submit" value="Submit">
+			<button class="btn btn-default" type="submit" value="Submit">Submit</button>
 	
 		</form>
+	</div>
+</div>
 
 {% endblock %}
