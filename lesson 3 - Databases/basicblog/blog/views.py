@@ -5,7 +5,7 @@ from models import *
 @app.route('/')
 @app.route('/blog/')
 def index():
-	all_posts = db.GqlQuery('select * from Entry order by created desc')
+	all_posts = db.GqlQuery('select * from Entry order by created desc limit 10')
 	return render_template("front.html", all_posts=all_posts)
 
 @app.route('/blog/newpost/', methods=['GET', 'POST'])
@@ -15,13 +15,17 @@ def newpost():
 		blog = request.form['blog']
 		newEntry = Entry(subject=subject, blog=blog)
 		newEntry.put()
-
-		return redirect(url_for('permalink'))
+		# key = db.Key.from_path('subject', subject, 'blog', blog )
+		# post = db.get(key)
+		return redirect(url_for('index'))
 
 	if request.method == 'GET':
 		return render_template('newpost.html')
 
-@app.route('/blog/newEntry/')
-def permalink():
+@app.route('/blog/<int:blog_id>/')
+def permalink(blog_id):
+	# key = db.Key.from_path('Entry', blog_id)
+	# post = db.get(key)
 	last_blog_post = db.GqlQuery('select * from Entry order by created asc limit 1')
-	return render_template('permalink.html', last_blog_post=last_blog_post)
+	blog_id = last_blog_post.key().id_or_name()
+	return render_template('permalink.html', blog_id=blog_id)
