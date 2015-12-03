@@ -16,8 +16,8 @@ def newpost():
 		if subject and blog:
 			newEntry = Entry(parent= blog_key(), subject=subject, blog=blog)
 			newEntry.put()
-			flash('Thanks for your submission!')
-			return redirect(url_for('permalink', id=newEntry.key().id()))
+			flash('Thanks for your submission!', 'danger')
+			return redirect(url_for('permalink', post_id=newEntry.key().id()))
 		else:
 			flash('You need both subject and blog entry', 'danger')
 			return render_template('newpost.html')
@@ -26,9 +26,9 @@ def newpost():
 	if request.method == 'GET':
 		return render_template('newpost.html')
 
-@app.route('/blog/<id>/')
-def permalink(id):
-    key = db.Key.from_path('Entry', int(id), parent=blog_key())
+@app.route('/blog/<post_id>/')
+def permalink(post_id):
+    key = db.Key.from_path('Entry', int(post_id), parent=blog_key())
     post = db.get(key)
     if not post:
         self.error(404)
