@@ -26,7 +26,7 @@ def newpost():
 	if request.method == 'GET':
 		return render_template('newpost.html')
 
-@app.route('/blog/newpost/<id>/')
+@app.route('/blog/<id>/')
 def permalink(id):
     key = db.Key.from_path('Entry', int(id), parent=blog_key())
     post = db.get(key)
