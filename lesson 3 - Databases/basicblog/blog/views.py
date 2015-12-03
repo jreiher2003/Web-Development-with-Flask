@@ -13,19 +13,21 @@ def newpost():
 	if request.method == 'POST':
 		subject = request.form['subject']
 		blog = request.form['blog']
-		newEntry = Entry(subject=subject, blog=blog)
-		newEntry.put()
-		# key = db.Key.from_path('subject', subject, 'blog', blog )
-		# post = db.get(key)
-		return redirect(url_for('index'))
+		if subject and blog:
+			newEntry = Entry(subject=subject, blog=blog)
+			newEntry.put()
+			return redirect(url_for('permalink', id=newEntry.key().id()))
+
 
 	if request.method == 'GET':
 		return render_template('newpost.html')
 
-@app.route('/blog/<int:blog_id>/')
-def permalink(blog_id):
+@app.route('/blog/newpost/<id>/')
+def permalink(id):
+	last_post = db.GqlQuery('select * from Entry order by created desc limit 1')
 	# key = db.Key.from_path('Entry', blog_id)
 	# post = db.get(key)
-	last_blog_post = db.GqlQuery('select * from Entry order by created asc limit 1')
-	blog_id = last_blog_post.key().id_or_name()
-	return render_template('permalink.html', blog_id=blog_id)
+	# last_blog_post = db.GqlQuery('select * from Entry order by created asc limit 1')
+	# blog_id = last_blog_post.key().id_or_name()
+	# return render_template('permalink.html', blog_id=blog_id)
+	return render_template('permalink.html', last_post=last_post)
