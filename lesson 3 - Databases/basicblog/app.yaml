@@ -6,8 +6,8 @@ threadsafe: true
 
 default_expiration: "60d"
 
-builtins:
-- datastore_admin: on
+# builtins:
+# - datastore_admin: on
 
 libraries:
 - name: jinja2
