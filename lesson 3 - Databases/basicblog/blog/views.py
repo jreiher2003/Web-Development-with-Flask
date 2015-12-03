@@ -5,7 +5,7 @@ from models import *
 @app.route('/')
 @app.route('/blog/')
 def index():
-	all_posts = db.session.query(Entry).all()
+	all_posts = db.session.query(Entry).order_by(Entry.id.desc()).limit(10)
 	return render_template('front.html', all_posts=all_posts)
 
 @app.route('/blog/newpost/', methods=['GET', 'POST'])
