@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, flash
 from blog import app 
 from models import *
 
@@ -16,7 +16,11 @@ def newpost():
 		if subject and blog:
 			newEntry = Entry(parent= blog_key(), subject=subject, blog=blog)
 			newEntry.put()
+			flash('Thanks for your submission!')
 			return redirect(url_for('permalink', id=newEntry.key().id()))
+		else:
+			flash('You need both subject and blog entry', 'danger')
+			return render_template('newpost.html')
 
 
 	if request.method == 'GET':
