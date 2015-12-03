@@ -16,7 +16,7 @@ def newpost():
 		if subject and blog:
 			newEntry = Entry(parent= blog_key(), subject=subject, blog=blog)
 			newEntry.put()
-			flash('Thanks for your submission!', 'danger')
+			flash('Thanks for your submission!', 'success')
 			return redirect(url_for('permalink', post_id=newEntry.key().id()))
 		else:
 			flash('You need both subject and blog entry', 'danger')

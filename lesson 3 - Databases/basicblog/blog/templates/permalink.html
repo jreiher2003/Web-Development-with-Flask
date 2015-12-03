@@ -3,6 +3,16 @@
 {% block content %}
 <div class="row">
 	<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3">
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+			{% for category, message in messages %}
+			<div class="alert alert-{{ category }} alert-dismissible" role="alert">
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				{{ message }}
+			</div>	
+			{% endfor %}
+			{% endif %}
+			{% endwith %}
 		<div>
 			{{ post.key().id() }}
 			<small class="pull-right">{{ post.created }}</small>
