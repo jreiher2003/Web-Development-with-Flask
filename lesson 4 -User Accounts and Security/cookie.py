@@ -31,13 +31,13 @@ def logout():
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 #reading cookies
-@app.route('/')
-def index():
+@app.route('/1')
+def index1():
 	username = request.cookie.get('username')
 
 # storing cookie
-@app.route('/')
-def index1():
+@app.route('/2')
+def index2():
 	resp = make_response(render_template('index.html'))
 	resp.set_cookie('username', 'Jeff Reiher')
 	return resp
@@ -49,3 +49,6 @@ def cookie_insertion():
     response = current_app.make_response(redirect_to_index )  
     response.set_cookie('cookie_name',value='values')
     return response
+
+# if __main__ == '__name__':
+app.run()
