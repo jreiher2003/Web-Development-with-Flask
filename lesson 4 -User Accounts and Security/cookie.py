@@ -31,11 +31,9 @@ def logout():
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 #reading cookies
-@app.route('/count')
+@app.route('/cou/')
 def count_clicks():
-    response.headers['Content-Type'] = 'text/plain'
-    visits = request.cookie.get('visits',0)
-    return 'You have been here %s times!' % visits
+    return 'You have been here  times!' 
 
 # storing cookie
 @app.route('/2')
