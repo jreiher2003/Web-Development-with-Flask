@@ -50,5 +50,5 @@ def cookie_insertion():
     response.set_cookie('cookie_name',value='values')
     return response
 
-# if __main__ == '__name__':
+
 app.run()
