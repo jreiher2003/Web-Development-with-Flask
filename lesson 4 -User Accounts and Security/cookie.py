@@ -28,19 +28,22 @@ def logout():
     return redirect(url_for('index'))
 
 # set the secret key.  keep this really secret:
-app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 #reading cookies
-@app.route('/cou/')
+@app.route('/count/')
 def count_clicks():
-    return 'You have been here  times!' 
+    visits = request.cookies.get('visits', 0)
+    session['visits'] += 1
+    resp = make_response("You have been here %s times!" % visits)
+    resp.set_cookie('visits', '%s' % visits)
+    return resp
 
 # storing cookie
 @app.route('/2')
 def index2():
-	resp = make_response(render_template('index.html'))
-	resp.set_cookie('username', 'Jeff Reiher')
-	return resp
+    resp = make_response(render_template('index.html'))
+    resp.set_cookie('username', 'Jeff Reiher')
+    return resp
 
 # set cookie
 @app.route('/set_cookie')
@@ -51,4 +54,7 @@ def cookie_insertion():
     return response
 
 
-app.run(debug=True)
+if __name__ == '__main__':
+    app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+    # app.debug = True
+    app.run(debug=True)
