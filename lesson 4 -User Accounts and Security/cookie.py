@@ -1,7 +1,10 @@
+import os
 from flask import Flask, session, redirect, url_for, escape, request, make_response
 
 app = Flask(__name__)
 
+def write(self, *a, **kw):
+    return self.response.out.write(*a, **kw)
 # sessions
 @app.route('/')
 def index():
@@ -28,16 +31,21 @@ def logout():
     return redirect(url_for('index'))
 
 # set the secret key.  keep this really secret:
+@app.route('/counting/')
+def count_me():
+    response.headers['Content-Type'] = 'text/plain'
+    visits = request.cookies.get('visits', 0)
+    self.write("you have been here %s times!" % visits)
 
 #reading cookies
 @app.route('/count/')
 def count_clicks():
     visits = request.cookies.get('visits', 0)
-    session['visits'] += 1
+    visits = int(session['visits'])
+    visits += 1
     resp = make_response("You have been here %s times!" % visits)
     resp.set_cookie('visits', '%s' % visits)
     return resp
-
 # storing cookie
 @app.route('/2')
 def index2():
@@ -57,4 +65,5 @@ def cookie_insertion():
 if __name__ == '__main__':
     app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
     # app.debug = True
+    
     app.run(debug=True)
