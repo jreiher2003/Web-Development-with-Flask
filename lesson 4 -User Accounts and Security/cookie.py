@@ -44,29 +44,26 @@ def count_me():
 #reading cookies
 @app.route('/count/')
 def count_clicks():
-    # visits = request.cookies.get('visits', 0)
-    # visits =+ 1
-    # resp = Response("You you fff")
-    # resp.headers['Access-Control-Allow-Origin'] = '*'
-    # if resp.headers['Cache-Control']:
     response = make_response('you are responing')
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.set_cookie('JeffsCookie',value='jeff', max_age=50000, expires=datetime.datetime.now() + datetime.timedelta(days=30))
    
     return response
-    # return resp
-    # response = make_response(redirect('/count/'))
-    # response.set_cookie('session_id', s.session_id)
-    # app.make_response.headers.add_header('Set-Cookie', 'visits=%s' % visits)
-    # return "Visits: %s" % visits    
+     
 
-
+@app.route('/redirect-link')
+def redirect_me():
+    visits = request.cookies.get('visits')
+    # int(visits) = visits
+    response = make_response("You just go redirected to here %s times!" % visits)
+    return response
 # set cookie
 @app.route('/set_cookie')
 def cookie_insertion():
-    redirect_to_index = redirect(url_for('count_clicks'))
-    response = app.make_response(redirect_to_index )  
-    response.set_cookie('visits',value='1')
+    # redirect_to_index = redirect(url_for('cookie_insertion'))
+    session['visits'] += 1
+    response = make_response('redirect_me %s' % session['visits'])
+    response.set_cookie('visits',value=str(session['visits']))
     return response
 
 @app.route('/new')
@@ -74,8 +71,20 @@ def count_a_cookie():
     try:
         session['visits'] +=1
     except KeyError:
-        session['visits'] = 1
+        session['visits'] = 0
     return 'Visits: %s' % session['visits']
+
+@app.route('/jeff')
+def cookie_count():
+    try:
+        session['visits'] +=1
+    except KeyError:
+        session['visits'] = 0
+
+    response = make_response("Visits: %s" % session['visits'])
+    response.set_cookie('visits', value=str(session['visits']), expires=datetime.datetime.now() + datetime.timedelta(days=30))
+    
+    return response
 
 @app.route('/clear')
 def clearsession():
