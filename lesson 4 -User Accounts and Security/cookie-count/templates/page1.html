@@ -1,0 +1,34 @@
+ <html>
+    <head>
+        <title>Session Management with Flask</title>
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <div id="container">
+            <div class="title">
+                <h1>Session Management with Flask - Page 1</h1>
+            </div>
+            <div id="content">
+            {% if session['name'] %}
+            Your name seems to be <strong>{{session['name']}}</strong>.<br/>
+            {% else %}
+            You still didn't set your name, do it <a href="{{ url_for('form') }}">here</a>.<br/>
+            {% endif %}
+            On each page that you visit, this counter will be incremented: <strong>{{session['counter']}}</strong><br />
+            Visit <a href="{{ url_for('page1') }}">this</a> or <a href="{{ url_for('page2') }}">this</a> page to read some session variables there.
+            <br /><br />
+            <strong><a href="{{ url_for('clearsession') }}">Clear session</a></strong> - <a href="{{ url_for('index') }}">Index</a>
+            </div>
+            <div class="title">
+                <h1>Flask code</h1>
+            </div>
+                <code><pre>
+@app.route('/form')
+def form():
+  return render_template('form.html')
+                </pre></code>
+            </div>
+        </div>
+    </body>
+</html>
+  
