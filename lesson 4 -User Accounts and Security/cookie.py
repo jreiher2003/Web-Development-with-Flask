@@ -1,7 +1,8 @@
 import os
-from flask import Flask, session, redirect, url_for, escape, request, make_response
-
+from flask import Flask, session, redirect, url_for, escape, request, make_response,Response
+import datetime
 app = Flask(__name__)
+
 
 def write(self, *a, **kw):
     return self.response.out.write(*a, **kw)
@@ -43,9 +44,21 @@ def count_me():
 #reading cookies
 @app.route('/count/')
 def count_clicks():
-    visits = request.cookies.get('visits')
-    visits =+ 1
-    return "Visits: %s" % visits    
+    # visits = request.cookies.get('visits', 0)
+    # visits =+ 1
+    # resp = Response("You you fff")
+    # resp.headers['Access-Control-Allow-Origin'] = '*'
+    # if resp.headers['Cache-Control']:
+    response = make_response('you are responing')
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.set_cookie('JeffsCookie',value='jeff', max_age=50000, expires=datetime.datetime.now() + datetime.timedelta(days=30))
+   
+    return response
+    # return resp
+    # response = make_response(redirect('/count/'))
+    # response.set_cookie('session_id', s.session_id)
+    # app.make_response.headers.add_header('Set-Cookie', 'visits=%s' % visits)
+    # return "Visits: %s" % visits    
 
 
 # set cookie
