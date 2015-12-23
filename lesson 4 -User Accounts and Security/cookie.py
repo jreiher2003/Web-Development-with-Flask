@@ -30,37 +30,44 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('index'))
 
+
 # set the secret key.  keep this really secret:
 @app.route('/counting/')
 def count_me():
-    response.headers['Content-Type'] = 'text/plain'
+    # response.headers['Content-Type'] = 'text/plain'
     visits = request.cookies.get('visits', 0)
-    self.write("you have been here %s times!" % visits)
+    visits =+1
+    return "you have been here %s times!" % visits
+
 
 #reading cookies
 @app.route('/count/')
 def count_clicks():
-    visits = request.cookies.get('visits', 0)
-    visits = int(session['visits'])
-    visits += 1
-    resp = make_response("You have been here %s times!" % visits)
-    resp.set_cookie('visits', '%s' % visits)
-    return resp
-# storing cookie
-@app.route('/2')
-def index2():
-    resp = make_response(render_template('index.html'))
-    resp.set_cookie('username', 'Jeff Reiher')
-    return resp
+    visits = request.cookies.get('visits')
+    visits =+ 1
+    return "Visits: %s" % visits    
+
 
 # set cookie
 @app.route('/set_cookie')
 def cookie_insertion():
-    redirect_to_index = redirect('/index')
-    response = current_app.make_response(redirect_to_index )  
-    response.set_cookie('cookie_name',value='values')
+    redirect_to_index = redirect(url_for('count_clicks'))
+    response = app.make_response(redirect_to_index )  
+    response.set_cookie('visits',value='1')
     return response
 
+@app.route('/new')
+def count_a_cookie():
+    try:
+        session['visits'] +=1
+    except KeyError:
+        session['visits'] = 1
+    return 'Visits: %s' % session['visits']
+
+@app.route('/clear')
+def clearsession():
+    session.clear()
+    return redirect(url_for('count_a_cookie'))
 
 if __name__ == '__main__':
     app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
