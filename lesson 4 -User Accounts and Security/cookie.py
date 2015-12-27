@@ -1,11 +1,55 @@
 import os
 from flask import Flask, session, redirect, url_for, escape, request, make_response,Response
 import datetime
+import hashlib
+
 app = Flask(__name__)
 
+def hash_str(s):
+    return hashlib.md5(s).hexdigest()
+
+
+def make_secure_val(s):
+    return "%s|%s" % (s, hash_str(s))
+# print make_secure_val('1')
+
+def check_secure_val(h):
+    val = h.split('|')[0].strip()
+    hash_val = h.split('|')[1].strip()
+    check_val =  make_secure_val(val).split('|')[1].strip()
+    if hash_val == check_val:
+        return val
+    else:
+        return None
+# print make_secure_val('1')
+print check_secure_val('1|c4ca4238a0b923820dcc509a6f75849b')
+# set the secret key.  keep this really secret:
+@app.route('/counting/')
+def count_me():
+    visits = request.cookies.get('visits', 0)
+    try:
+        visits
+        if visits.isdigit():
+            visits = int(visits) + 1
+    except AttributeError:
+        visits = 0
+    response = make_response("you have been here %s times!" % visits)
+    response.set_cookie('visits', value='%s' % visits)
+    if visits > 100000:
+        return make_response("You are awesome")
+    else:
+        return response
 
 # sessions
 @app.route('/')
+@app.route('/clear')
+def clearsession():
+    session.clear()
+    response = make_response(redirect(url_for('count_me')))
+    response.set_cookie('visits', value='0')
+    return response
+
+
 def index():
     if 'username' in session:
         return 'Logged in as %s' % escape(session['username'])
@@ -31,22 +75,6 @@ def logout():
     return redirect(url_for('index'))
 
 
-# set the secret key.  keep this really secret:
-@app.route('/counting/')
-def count_me():
-    visits = request.cookies.get('visits', 0)
-    try:
-        visits
-        if visits.isdigit():
-            visits = int(visits) + 1
-    except AttributeError:
-        visits = 0
-    response = make_response("you have been here %s times!" % visits)
-    response.set_cookie('visits', value='%s' % visits)
-    if visits > 100000:
-        return make_response("You are awesome")
-    else:
-        return response
 
 
 #reading cookies
@@ -91,12 +119,6 @@ def cookie_count():
     return response
 
 
-@app.route('/clear')
-def clearsession():
-    session.clear()
-    response = make_response(redirect(url_for('count_me')))
-    response.set_cookie('visits', value='0')
-    return response
 
 
 if __name__ == '__main__':
