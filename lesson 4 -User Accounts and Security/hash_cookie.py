@@ -21,7 +21,6 @@ def check_secure_val(s):
 print check_secure_val('foobar, 3858f62230ac3c915f300c664312c63f')
 
 
-
 s = 'foobar, 3858f62230ac3c915f300c664312c63f'
 val = s.split(',')[0].strip()
 hash_val = s.split(',')[1].strip()
