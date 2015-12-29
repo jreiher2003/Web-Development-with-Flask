@@ -14,14 +14,16 @@ def make_secure_val(s):
 # print make_secure_val('1')
 
 def check_secure_val(h):
+    # h = str(h)
     val = h.split('|')[0].strip()
-    hash_val = h
+    hash_val = h.split('|')[1].strip()
+    # print hash_val
     check_val =  make_secure_val(val).split('|')[1].strip()
+    # print check_val
     if hash_val == check_val:
         return val
     else:
         return None
-# print make_secure_val('1')
 # print check_secure_val('1|c4ca4238a0b923820dcc509a6f75849b')
 # set the secret key.  keep this really secret:
 @app.route('/counting/')
@@ -110,7 +112,8 @@ def cookie_insertion():
         session['visits'] = 0
     response = make_response('redirect_me %s' % session['visits'])
     has = make_secure_val(str(session['visits']))
-    response.set_cookie('visits',value=has)
+    if check_secure_val(has) != None:
+        response.set_cookie('visits',value=has)
     return response
 
 
