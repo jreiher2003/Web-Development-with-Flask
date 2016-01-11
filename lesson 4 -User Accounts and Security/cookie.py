@@ -2,12 +2,20 @@ import os
 from flask import Flask, session, redirect, url_for, escape, request, make_response,Response
 import datetime
 import hashlib
+import hmac 
+
+SECRET = 'the_key'
 
 app = Flask(__name__)
 
-def hash_str(s):
-    return hashlib.md5(s).hexdigest()
+print hashlib.md5("110").hexdigest()
 
+def hash_str(s):
+    return hmac.new(SECRET, s).hexdigest()
+# print has_str1('yo')
+
+# def hash_str(s):
+#     return hashlib.md5(s).hexdigest()
 
 def make_secure_val(s):
     return "%s|%s" % (s, hash_str(s))
@@ -81,7 +89,8 @@ def onlyCookie():
 			response = make_response("Your awesome")
 			response.set_cookie('visits', value='%s' % has)
     elif check_secure_val(has) == None:
-    	response = make_response("cookie value doesn't make the hash")
+        visits = 0
+    	response = make_response("cookie value doesn't make the hash now the value is %s" % visits)
     	response.set_cookie('visits', value=0)
     
     return response
@@ -92,7 +101,7 @@ def onlyCookie():
 @app.route('/clear')
 def clearsession():
     session.clear()
-    response = make_response(redirect(url_for('cookie_insertion')))
+    response = make_response(redirect(url_for('onlyCookie')))
     response.set_cookie('visits', value='0')
     return response
 
