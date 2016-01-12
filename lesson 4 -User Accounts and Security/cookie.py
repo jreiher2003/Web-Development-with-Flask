@@ -3,16 +3,46 @@ from flask import Flask, session, redirect, url_for, escape, request, make_respo
 import datetime
 import hashlib
 import hmac 
+import random
 
 SECRET = 'the_key'
 
 app = Flask(__name__)
 
-print hashlib.md5("110").hexdigest()
 
+####################################
+####  hash passwords stuff  ########
+####################################
+def make_salt():
+    n = 5
+    return int(''.join(["%s" % random.randint(0,9) for num in range(0,n)]))
+
+
+def make_pw_hash(name, pw):
+    """ return Hash(name + pw + salt), salt """
+    name = str(name)
+    pw = str(pw)
+    salt = str(make_salt())
+    concat = hashlib.sha256(name+pw+salt).hexdigest()
+    return concat, salt
+
+# print make_pw_hash('jeff', 'finn')
+def valid_pw(name, pw, h):
+    """ returns true print valid_pw('name', 'pw', h) """
+    pass
+# x = 2 ** 256
+# y = len(str(x))
+# print x , y
+# print "{:,}".format(x)
+
+
+
+########################
+####  cookie stuff  ####
+########################
 def hash_str(s):
     return hmac.new(SECRET, s).hexdigest()
-# print has_str1('yo')
+
 
 # def hash_str(s):
 #     return hashlib.md5(s).hexdigest()
@@ -109,4 +139,4 @@ def clearsession():
 
 if __name__ == '__main__':
     app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
-    app.run(debug=True)
+    # app.run(debug=True)
