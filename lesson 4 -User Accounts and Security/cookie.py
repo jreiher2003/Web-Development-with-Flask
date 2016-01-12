@@ -4,12 +4,42 @@ import datetime
 import hashlib
 import hmac 
 import random
+import bcrypt
 
 SECRET = 'the_key'
 
 app = Flask(__name__)
 
+from functools import wraps
+from flask import request, redirect, current_app
 
+def ssl_required(fn):
+    @wraps(fn)
+    def decorated_view(*args, **kwargs):
+        if current_app.config.get("SSL"):
+            if request.is_secure:
+                return fn(*args, **kwargs)
+            else:
+                return redirect(request.url.replace("http://", "https://"))
+        
+        return fn(*args, **kwargs)
+            
+    return decorated_view
+
+####################################
+############## bcrypt stuff ########
+####################################
+def super_pw_checker(password):
+# password = b"super secret password"
+    hashed = bcrypt.hashpw(password, bcrypt.gensalt(12))
+    print hashed
+
+    if bcrypt.hashpw(password, hashed) == hashed:
+        return "It matches"
+    else:
+        return "It no matches"
+
+print super_pw_checker('finn7797')
 ####################################
 ####  hash passwords stuff  ########
 ####################################
@@ -18,18 +48,26 @@ def make_salt():
     return int(''.join(["%s" % random.randint(0,9) for num in range(0,n)]))
 
 
-def make_pw_hash(name, pw):
+def make_pw_hash(name, pw, salt=None):
     """ return Hash(name + pw + salt), salt """
+    if not salt:
+        salt = str(make_salt())
     name = str(name)
     pw = str(pw)
-    salt = str(make_salt())
     concat = hashlib.sha256(name+pw+salt).hexdigest()
     return concat, salt
 
 # print make_pw_hash('jeff', 'finn')
 def valid_pw(name, pw, h):
     """ returns true print valid_pw('name', 'pw', h) """
-    pass
+    salt = h[1]
+    # print salt
+    return h == make_pw_hash(name,pw,salt)
+
+h = make_pw_hash('jeff', 'finn')
+# print h
+# print valid_pw('jeff', 'finn', h)
+    
 # x = 2 ** 256
 # y = len(str(x))
 # print x , y
@@ -60,7 +98,7 @@ def check_secure_val(h):
     else:
         return None
 
-
+@app.route('/')
 def index():
     if 'username' in session:
         return 'Logged in as %s' % escape(session['username'])
@@ -68,6 +106,7 @@ def index():
 
 
 @app.route('/login', methods=['GET', 'POST'])
+@ssl_required
 def login():
     if request.method == 'POST':
         session['username'] = request.form['username']
@@ -101,6 +140,7 @@ def cookie_insertion():
 
 # set cookkie without a session cookie
 @app.route('/only_cookie')
+@ssl_required
 def onlyCookie():
     visits = request.cookies.get('visits',0)
     try:
@@ -139,4 +179,4 @@ def clearsession():
 
 if __name__ == '__main__':
     app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
-    # app.run(debug=True)
+    app.run(debug=True)
