@@ -10,15 +10,6 @@
 {{ current_user.email }}
 <br><br>
 <a href="{{ url_for('logout') }}">Logout</a>
-
-{% elif current_user.is_anonymous %}
-
-	<a href="{{ url_for('login')}}">Login</a>
-	<br>
-	<a href="{{ url_for('register') }}">Sign Up</a>
-
-{% endif %}
-
 <br>
 <!-- post form -->
 <h3>Add a Post!</h3>
@@ -54,6 +45,15 @@
  
   <button class="btn btn-lg btn-success" type="submit">Post</button>
 </form>
+
+{% elif current_user.is_anonymous %}
+
+	<a href="{{ url_for('login')}}">Login</a>
+	<br>
+	<a href="{{ url_for('register') }}">Sign Up</a>
+
+{% endif %}
+
 
 <!-- All posts -->
 <h3>Posts:</h3>
