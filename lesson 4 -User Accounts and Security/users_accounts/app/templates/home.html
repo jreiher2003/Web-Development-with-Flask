@@ -4,4 +4,17 @@
 
 <h1> Home Page</h1>
 
+{% if current_user.is_active %}
+<!-- User posts -->
+{{ current_user.name }}<br>
+{{ current_user.email }}
+<br><br>
+<a href="{{ url_for('logout') }}">Logout</a>
+
+{% elif current_user.is_anonymous %}
+
+	<a href="{{ url_for('login')}}">Login</a>
+
+{% endif %}
+
 {% endblock %}
