@@ -6,7 +6,7 @@
 
 {% if current_user.is_active %}
 <!-- User posts -->
-{{ current_user.name }}<br>
+<h2>Welcome, {{ current_user.name }}!</h2><br>
 {{ current_user.email }}
 <br><br>
 <a href="{{ url_for('logout') }}">Logout</a>
@@ -18,5 +18,50 @@
 	<a href="{{ url_for('register') }}">Sign Up</a>
 
 {% endif %}
+
+<br>
+<!-- post form -->
+<h3>Add a Post!</h3>
+<br>
+<form class="form-message" role="form" method="post" action="/">
+  {{ form.csrf_token }}
+
+  <div class="form-group">
+  	 <label for="title">Title</label>
+    {{ form.title(class="form-control", placeholder="title") }}
+  </div>
+
+    <span class="error bg-danger">
+      {% if form.title.errors %}
+        {% for error in form.title.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  
+  <div class="form-group">
+  	 <label for="description">Description</label>
+  {{ form.description(class="form-control", rows="5", placeholder="description") }}
+	</div>
+
+    <span class="error bg-danger">
+      {% if form.description.errors %}
+        {% for error in form.description.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+ 
+  <button class="btn btn-lg btn-success" type="submit">Post</button>
+</form>
+
+<!-- All posts -->
+<h3>Posts:</h3>
+{% for post in posts %}
+  <strong>Title:</strong> {{ post.title }} <br>
+  <strong>Post:</strong> {{ post.description }} <br>
+  <strong>Author:</strong> {{ post.author.name }} <br>
+<br>
+{% endfor %}
 
 {% endblock %}

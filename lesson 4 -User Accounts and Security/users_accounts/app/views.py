@@ -1,12 +1,24 @@
 from app import app, db
 from flask import flash, redirect, render_template, request, url_for
-from flask.ext.login import login_user, logout_user, login_required
-from forms import LoginForm, RegisterForm
-from app.models import User, bcrypt
+from flask.ext.login import login_user, logout_user, login_required, current_user
+from forms import LoginForm, RegisterForm, MessageForm
+from app.models import User, BlogPost, bcrypt
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
+# @login_required
 def index():
-	return render_template('home.html')
+	error = None
+	form = MessageForm(request.form)
+	if request.method == 'POST':
+	    if form.validate_on_submit():
+			new_post = BlogPost(form.title.data,form.description.data,current_user.id)
+			db.session.add(new_post)
+			db.session.commit()
+			flash('New Post was successfully posted.', 'bg-success')
+			return redirect(url_for('index'))
+	else:
+		posts = db.session.query(BlogPost).all()
+		return render_template('home.html', posts=posts,form=form, error=error)
 
 
 @app.route('/login', methods=["GET", "POST"])

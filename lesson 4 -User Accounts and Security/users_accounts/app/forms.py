@@ -1,5 +1,5 @@
 from flask_wtf import Form # pragma: no cover
-from wtforms import TextField, PasswordField # pragma: no cover
+from wtforms import TextField, PasswordField, TextAreaField # pragma: no cover
 from wtforms.validators import DataRequired, Length, Email, EqualTo # pragma: no cover
 
 
@@ -13,3 +13,8 @@ class RegisterForm(Form):
     email = TextField('email', validators=[DataRequired(), Email(message=None), Length(min=6, max=40)])
     password = PasswordField('password', validators=[DataRequired(), Length(min=6, max=25)])
     confirm = PasswordField('Repeat password', validators=[DataRequired(), EqualTo('password', message='Passwords must match.')])
+
+
+class MessageForm(Form):
+    title = TextField('Title', validators=[DataRequired()])
+    description = TextAreaField('Description', validators=[DataRequired(), Length(max=140)])
