@@ -1,7 +1,7 @@
 from app import app, db
 from flask import flash, redirect, render_template, request, url_for
-from flask.ext.login import login_user, logout_user
-from forms import LoginForm
+from flask.ext.login import login_user, logout_user, login_required
+from forms import LoginForm, RegisterForm
 from app.models import User, bcrypt
 
 @app.route('/')
@@ -27,7 +27,22 @@ def login():
 
 
 @app.route('/logout')
+@login_required
 def logout():
 	logout_user()
 	flash('You were logged out.', 'bg-danger')
 	return redirect(url_for('index'))
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+	form = RegisterForm()
+	if form.validate_on_submit():
+		user = User(name=form.username.data,
+					email=form.email.data,
+					password=form.password.data)
+		db.session.add(user)
+		db.session.commit()
+		login_user(user)
+		return redirect(url_for('index'))
+	return render_template('register.html', form=form)
