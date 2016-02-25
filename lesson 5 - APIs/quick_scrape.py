@@ -53,6 +53,7 @@ def grab_email1(url):
 	# print p.read()
 	# f = re.compile(r'[a-zA-Z]+@[a-zA-Z]+\.[a-zA-Z]+')
 	EMAIL_ADDRESS = re.compile(r'\b[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+')
+	# EMAIL_ADDRESS = re.compile('\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Z]{2,}\b')
 
 	# pprint(f.findall(p.read()))
 	pprint(EMAIL_ADDRESS.findall(p.read()))
