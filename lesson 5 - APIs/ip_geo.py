@@ -8,8 +8,9 @@ def get_coords(ip):
 	content = urllib2.urlopen(url).read()
 	if content:
 		result = json.loads(content)
-		# print result.keys()
-		return result['lon']
+		lon = result['lon']
+		lat = result['lat']
+		return lon, lat
 
 
-print get_coords("73.55.103.114")
+print get_coords("4.2.2.2")
