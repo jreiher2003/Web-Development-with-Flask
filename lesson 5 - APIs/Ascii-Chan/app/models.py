@@ -13,10 +13,11 @@ class AsciiArt(db.Model):
 		self.title = title
 		self.art = art
 		self.coords = coords
+		
 
 	@property 
 	def format_date(self):
-		return '{dt:%A} {dt:%B} {dt.day}, {dt.year}'.format(dt=self.adopt_date)
+		return '{dt:%A} {dt:%B} {dt.day}, {dt.year}'.format(dt=self.created)
 
 	def __repr__(self):
 		return '<title>: {}'.format(self.title)
