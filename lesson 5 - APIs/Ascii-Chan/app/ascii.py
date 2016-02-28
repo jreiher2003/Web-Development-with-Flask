@@ -32,20 +32,16 @@ def gmaps_img(points):
 @app.route("/", methods=["GET","POST"])
 def hello():
     error = None
-    form = AsciiForm()
     all_art = AsciiArt.query.order_by(AsciiArt.id.desc()).all()
+    form = AsciiForm()
     all_art = list(all_art)
-    lat = []
-    lon = []
-    for a in all_art:
-        lat.append(a.lat)
-    for b in all_art:
-        lon.append(b.lon)
+    lat = [a.lat for a in all_art]
+    lon = [b.lon for b in all_art]
     x = zip(lat,lon)
     img_url = None
     img_url = gmaps_img(x)
     if form.validate_on_submit():
-        one = AsciiArt(title=form.title.data, art=request.form['art'])
+        one = AsciiArt(title=form.title.data, art=form.art.data)
         lat = get_coords(request.remote_addr)[0]
         lon = get_coords(request.remote_addr)[1]
         if lat and lon:
@@ -55,5 +51,42 @@ def hello():
         db.session.commit()
         flash("You just posted some <strong>ascii</strong> artwork!", 'success')
         return redirect(url_for('hello'))
-    return render_template("base.html", all_art=all_art, img_url=img_url, form=form, error=error)
+    return render_template("front.html", 
+        all_art=all_art, 
+        img_url=img_url, 
+        form=form, 
+        error=error)
+
+
+@app.route("/<int:art_id>/edit", methods=["GET","POST"])
+def edit_art(art_id):
+    all_art = AsciiArt.query.order_by(AsciiArt.id.desc()).all()
+    all_art = list(all_art)
+    lat = [a.lat for a in all_art]
+    lon = [b.lon for b in all_art]
+    x = zip(lat,lon)
+    img_url = None
+    img_url = gmaps_img(x)
+    error = None
+    edit_art = AsciiArt.query.filter_by(id=art_id).one()
+    form = AsciiForm(obj=edit_art)
+    return render_template("edit.html", 
+        error=error, 
+        edit_art=edit_art, 
+        form=form, 
+        all_art=all_art, 
+        img_url=img_url)
+
+
+@app.route("/<int:art_id>/delete", methods=["GET","POST"])
+def delete_art(art_id):
+    form = AsciiForm()
+    delete_artwork = AsciiArt.query.filter_by(id=art_id).one()
+    if request.method == "POST":
+        db.session.delete(delete_artwork)
+        db.session.commit()
+        flash("Just deleted <u>%s</u>" % delete_artwork.title, 'danger')
+        return redirect(url_for('hello'))
+    return render_template("delete.html", 
+        delete_artwork=delete_artwork)
 

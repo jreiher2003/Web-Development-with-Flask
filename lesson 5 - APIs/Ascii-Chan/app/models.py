@@ -3,7 +3,9 @@ from app import db
 
 
 class AsciiArt(db.Model):
+	
 	__tablename__ = 'asciiart'
+
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String)
 	art = db.Column(db.String)

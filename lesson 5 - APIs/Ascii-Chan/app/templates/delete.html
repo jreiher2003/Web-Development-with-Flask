@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>You sure you want to delete <u>{{ delete_artwork.title }}</u>?</h2>
+<form method="post" action="">
+    <input class="btn btn-danger" type="submit" value="Delete Item">
+    <a class="btn btn-default" href="/">Cancel</a>
+</form>
+{% endblock %}
