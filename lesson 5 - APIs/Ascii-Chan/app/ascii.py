@@ -1,5 +1,4 @@
 import datetime
-from ast import literal_eval
 import urllib2
 import json
 from app import app, db
@@ -17,8 +16,8 @@ def get_coords(ip):
     content = urllib2.urlopen(url).read()
     if content:
         result = json.loads(content)
-        lon = float(result['lon'])
-        lat = float(result['lat'])
+        lon = float(result["lon"])
+        lat = float(result["lat"])
         return lat,lon
 
 
@@ -37,9 +36,9 @@ def hello():
     all_art = list(all_art)
     lat = [a.lat for a in all_art]
     lon = [b.lon for b in all_art]
-    x = zip(lat,lon)
+    gps = zip(lat,lon)
     img_url = None
-    img_url = gmaps_img(x)
+    img_url = gmaps_img(gps)
     if form.validate_on_submit():
         one = AsciiArt(title=form.title.data, art=form.art.data)
         lat = get_coords(request.remote_addr)[0]
@@ -49,8 +48,8 @@ def hello():
             one.lon = lon
         db.session.add(one)
         db.session.commit()
-        flash("You just posted some <strong>ascii</strong> artwork!", 'success')
-        return redirect(url_for('hello'))
+        flash("You just posted some <strong>ascii</strong> artwork!", "success")
+        return redirect(url_for("hello"))
     return render_template("front.html", 
         all_art=all_art, 
         img_url=img_url, 
@@ -64,12 +63,19 @@ def edit_art(art_id):
     all_art = list(all_art)
     lat = [a.lat for a in all_art]
     lon = [b.lon for b in all_art]
-    x = zip(lat,lon)
+    gps = zip(lat,lon)
     img_url = None
-    img_url = gmaps_img(x)
+    img_url = gmaps_img(gps)
     error = None
     edit_art = AsciiArt.query.filter_by(id=art_id).one()
     form = AsciiForm(obj=edit_art)
+    if form.validate_on_submit():
+        edit_art.title = form.title.data
+        edit_art.art = form.art.data
+        db.session.add(edit_art)
+        db.session.commit()
+        flash("Successful Edit of <strong>%s</strong>" % edit_art.title, "info")
+        return redirect(url_for("hello"))
     return render_template("edit.html", 
         error=error, 
         edit_art=edit_art, 
@@ -85,8 +91,8 @@ def delete_art(art_id):
     if request.method == "POST":
         db.session.delete(delete_artwork)
         db.session.commit()
-        flash("Just deleted <u>%s</u>" % delete_artwork.title, 'danger')
-        return redirect(url_for('hello'))
+        flash("Just deleted <u>%s</u>" % delete_artwork.title, "danger")
+        return redirect(url_for("hello"))
     return render_template("delete.html", 
         delete_artwork=delete_artwork)
 
