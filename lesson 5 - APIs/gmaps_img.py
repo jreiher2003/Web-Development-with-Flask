@@ -1,13 +1,11 @@
-from collections import namedtuple
 
-# make a basic Point class
-Point = namedtuple('Point', ["lat", "lon"])
-points = [Point(1,2),
-          Point(3,4),
-          Point(5,6)]
-
-GMAPS_URL = "http://maps.googleapis.com/maps/api/staticmap?size=380x263&sensor=false&"
+points = [(40.7128, -74.0059), (None, None), (40.7128, -74.0059), (26.876, -82.2681)]
 def gmaps_img(points):
-    markers = '&'.join('markers=%s,%s' %(p.lat,p.lon) for p in points)
-    return GMAPS_URL+markers
-print gmaps_img([Point(100,200)])
+    GMAPS_URL = "http://maps.googleapis.com/maps/api/staticmap?size=380x263&sensor=false"
+    for lat, lon in points:
+    	GMAPS_URL += '&markers=%s,%s' % (lat, lon)
+    return GMAPS_URL
+
+
+print gmaps_img(points)
+
