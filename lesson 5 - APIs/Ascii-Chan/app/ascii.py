@@ -4,20 +4,22 @@ import urllib2
 import json
 from app import app, db
 from app.models import AsciiArt
-from flask import render_template, request, url_for, redirect
+from app.forms import AsciiForm
+from flask import render_template, request, url_for, redirect, flash
 
 
 IP_URL = "http://ip-api.com/json/"
 def get_coords(ip):
-	ip = "4.2.2.2"
-	url = IP_URL + ip
-	content = None
-	content = urllib2.urlopen(url).read()
-	if content:
-		result = json.loads(content)
-		lon = float(result['lon'])
-		lat = float(result['lat'])
-		return lat,lon
+    ip = "4.2.2.2"
+    ip = "23.24.209.141"
+    url = IP_URL + ip
+    content = None
+    content = urllib2.urlopen(url).read()
+    if content:
+        result = json.loads(content)
+        lon = float(result['lon'])
+        lat = float(result['lat'])
+        return lat,lon
 
 
 def gmaps_img(points):
@@ -29,6 +31,8 @@ def gmaps_img(points):
 
 @app.route("/", methods=["GET","POST"])
 def hello():
+    error = None
+    form = AsciiForm()
     all_art = AsciiArt.query.order_by(AsciiArt.id.desc()).all()
     all_art = list(all_art)
     lat = []
@@ -40,8 +44,8 @@ def hello():
     x = zip(lat,lon)
     img_url = None
     img_url = gmaps_img(x)
-    if request.method == 'POST':
-        one = AsciiArt(title=request.form['title'], art=request.form['art'])
+    if form.validate_on_submit():
+        one = AsciiArt(title=form.title.data, art=request.form['art'])
         lat = get_coords(request.remote_addr)[0]
         lon = get_coords(request.remote_addr)[1]
         if lat and lon:
@@ -49,6 +53,7 @@ def hello():
             one.lon = lon
         db.session.add(one)
         db.session.commit()
-        return redirect(url_for('hello', all_art=all_art, img_url=img_url))
-    return render_template("base.html", all_art=all_art, img_url=img_url)
+        flash("You just posted some <strong>ascii</strong> artwork!", 'success')
+        return redirect(url_for('hello'))
+    return render_template("base.html", all_art=all_art, img_url=img_url, form=form, error=error)
 

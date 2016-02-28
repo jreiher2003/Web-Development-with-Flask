@@ -11,37 +11,61 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			{{ points }}
-				<h3>/ascii/</h3>
-			<div class="row">
+			{% with messages = get_flashed_messages(with_categories=true) %}
+				{% if messages %}
+				{% for category, message in messages %}
+				<div class="alert alert-{{ category }} alert-dismissible" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					{{ message | safe }}
+				</div>	
+				{% endfor %}
 
+				{% endif %}
+			{% endwith %}
+			<h3>/ascii/</h3>
+			<div class="row">
 				<div class="col-md-6">
-				<form method="POST" action="">
-					<div class="form-group">
-						<label for="title">title</label>
-						<input class="form-control" name="title" id="title" type="text">
-					</div>
-					<div class="form-group">
-						<label for="art">art</label>
-						<textarea class="form-control" name="art" type="text" id="art" rows="10"></textarea>
-					</div>
-					<div class="form-group">
-						<input class="btn btn-primary" type="submit" value="post">
-					</div>
-				</form>
+					<form method="POST" action="">
+						{{ form.csrf_token }}
+						<div class="form-group">
+							{{ form.title.label(for="title", class="sr-only") }}
+							{{ form.title(class="form-control", id="title", type="text", placeholder="give your artwork a title...") }}
+							<span class="bg-danger">
+								{% if form.title.errors %}
+								{% for error in form.title.errors %}
+								<div class="bg-danger">{{ error }}</div>
+								{% endfor %}
+								{% endif %}
+							</span>
+						</div>
+						<div class="form-group">
+							{{ form.art.label(for="art", class="sr-only") }}
+							{{ form.art(class="form-control", id="art", rows="10", placeholder="paste your ascii artwork here...") }}
+							<span class="error bg-danger">
+								{% if form.art.errors %}
+								{% for error in form.art.errors %}
+								<div class="bg-danger">{{ error }}</div>
+								{% endfor %}
+								{% endif %}
+							</span>
+						</div>
+						<div class="form-group">
+							{{ form.submit(class="btn btn-primary") }}
+						</div>
+					</form>
 				</div> <!-- end col-md-6 -->
-				
+			
 				<div class="col-md-6">
 					<img src="{{ img_url }}">
 				</div>
 			</div> <!-- end row 2 -->
-		<hr>
-		{% for art in all_art %}
-		 	{{ art.lat }}&nbsp;{{ art.lon }}<br>
-			{{ art.format_date }}<br>
-		 	{{ art.title }}<br>
-		 	<pre class="text-center">{{ art.art }}</pre><br><br>
-		 {% endfor %}
+			<hr>
+			{% for art in all_art %}
+			 	{{ art.lat }}&nbsp;{{ art.lon }}<br>
+				{{ art.format_date }}<br>
+			 	{{ art.title }}<br>
+			 	<pre class="text-center">{{ art.art }}</pre><br><br>
+			 {% endfor %}
 		</div>
 	</div>
 </div>
