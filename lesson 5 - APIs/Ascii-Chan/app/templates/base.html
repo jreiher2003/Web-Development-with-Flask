@@ -37,10 +37,10 @@
 			</div> <!-- end row 2 -->
 		<hr>
 		{% for art in all_art %}
-		 	{{ art.coords }}<br>
+		 	{{ art.lat }}&nbsp;{{ art.lon }}<br>
 			{{ art.format_date }}<br>
 		 	{{ art.title }}<br>
-		 	<pre>{{ art.art }}</pre><br><br>
+		 	<pre class="text-center">{{ art.art }}</pre><br><br>
 		 {% endfor %}
 		</div>
 	</div>

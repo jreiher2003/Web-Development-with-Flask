@@ -6,7 +6,9 @@ print "just dropped table"
 db.create_all()
 
 
-one = AsciiArt(title="another title", art="anoter art", coords="(-82.2681, 26.876)")
+one = AsciiArt(title = "Test Title", art = "This is test art")
+one.lat =  42.363633
+one.lon = -87.844794
 db.session.add(one)
 db.session.commit()
 
