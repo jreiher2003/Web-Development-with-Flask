@@ -96,3 +96,6 @@ def delete_art(art_id):
     return render_template("delete.html", 
         delete_artwork=delete_artwork)
 
+@app.route("/ajax")
+def ajax():
+    return render_template("ajax.html")

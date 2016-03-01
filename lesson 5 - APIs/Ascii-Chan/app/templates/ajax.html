@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Ajax Usage{% endblock %}
+{% block content %}
+
+<form class="form-inline" action="" method="">
+	<div class="form-group">
+		<label for="street">Street</label>
+		<input type="text" id="street" name="street" class="form-control" placeholder="Enter a street address...">
+	</div>
+	<div class="form-group">
+		<label for="city">City</label>
+		<input type="text" name="city" id="city" class="form-control" placeholder="Enter a city...">
+	</div>
+	<input type="submit" class="btn btn-default" value="Search">
+</form>
+<hr>
+
+<h2 class="text-center">Where do you want to live?</h2>
+
+<div class="row">
+	<div class="col-md-6">
+		<h3>New York Times Articles</h3>
+		<p> Whats's going on in your new city?  Enter an address and hit submit and the NY Times will tell you here!</p>
+	</div>
+	<div class="col-md-6">
+		<h3>Relevant Wikipedia Links</h3>
+		<p>Type in an address above and find relevant Wikipedia articles here!</p>
+	</div>
+</div>
+
+
+{% endblock %}
