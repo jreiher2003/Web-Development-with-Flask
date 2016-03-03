@@ -98,11 +98,6 @@ def delete_art(art_id):
         delete_artwork=delete_artwork)
 
 
-def gmaps_street(string1,string2):
-    street_map = "https://maps.googleapis.com/maps/api/streetview?size=600x300&location=%s,%s&sensor=false" % (string1,string2)
-    return street_map
-
-
 @app.route("/ajax", methods=["GET","POST"])
 def ajax():    
     return render_template("ajax.html")
