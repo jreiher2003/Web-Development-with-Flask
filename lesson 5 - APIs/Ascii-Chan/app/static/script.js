@@ -23,19 +23,22 @@ function loadData() {
     $body.append("<img class='bgimg center-block' src='"+ streetviewUrl + "'>");
 
     var API = "http://api.nytimes.com/svc/search/v2/articlesearch.json?q="
-    var KEY = "&api-key=53ac231dce440f01b73fcdda60cccc59:4:70248560"
+    var KEY = "&sort=newest&api-key=53ac231dce440f01b73fcdda60cccc59:4:70248560"
     var URL = API + cityStr + KEY
     $.getJSON(URL, function( data ) {
         // console.log(data)
-        // console.log(data.response.docs)
+        $nytHeaderElem.text("New York Times Articles About " + cityStr);
+        console.log(data.response.docs)
         var articles = data.response.docs;
         console.log(articles.length)
         // console.log(articles[0]['web_url']);
         for (var i = 0; i < articles.length; i++ ) {
             var article = articles[i];
-            $nytElem.append("<li>" + "<a href='"+ article.web_url +"' target='_blank'>" + article.headline.main +"</a>" +"</li>");
+            $nytElem.append("<li>" + "<a href='"+ article.web_url +"' target='_blank'>" + article.headline.main +"</a>" + "<p>" + article.snippet + "</p></li>");
         };
         // console.log(URL)
+    }).error(function(e) {
+        $nytElem.text("Ny Times Couldn't be loaded at this time")
     });
     return false;
 };
