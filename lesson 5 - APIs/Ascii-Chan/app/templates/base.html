@@ -10,6 +10,9 @@
 </head>
 <body>
 <div class="container">
+	<a href="{{ url_for('hello') }}">Home</a>
+	<a href="{{ url_for('ajax') }}">Ajax Example</a>
+	<a href="{{ url_for('pup_api') }}">Puppy API Example</a>
 	<div class="row">
 		<div class="col-md-12">
 			{% with messages = get_flashed_messages(with_categories=true) %}
