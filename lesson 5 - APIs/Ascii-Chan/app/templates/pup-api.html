@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Ajax Usage{% endblock %}
+{% block content %}
+<p>This page was made to show that I can create and use api's</p>
+<p>I created an API on this <a href="http://adopt-puppy.herokuapp.com/shelters/.json">site</a> and I have used it down below. Try it out go <a href="http://adopt-puppy.herokuapp.com/new-shelter" target="_blank">here</a> and add a shelter, then come back to this page and see it show up. <br>
+
+1.<br>
+{% for key, value in shelters.items() %}
+	{#{{ key }} {{ value }}#}
+	{% for v in value %}
+		{{ v['name'] }}<br>
+	{% endfor %}
+{% endfor %}
+
+{% endblock %}

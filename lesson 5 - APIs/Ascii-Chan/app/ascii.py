@@ -1,5 +1,6 @@
 import datetime
 import urllib2
+import requests
 import json
 from app import app, db
 from app.models import AsciiArt
@@ -96,6 +97,20 @@ def delete_art(art_id):
     return render_template("delete.html", 
         delete_artwork=delete_artwork)
 
-@app.route("/ajax")
-def ajax():
+
+def gmaps_street(string1,string2):
+    street_map = "https://maps.googleapis.com/maps/api/streetview?size=600x300&location=%s,%s&sensor=false" % (string1,string2)
+    return street_map
+
+
+@app.route("/ajax", methods=["GET","POST"])
+def ajax():    
     return render_template("ajax.html")
+
+
+@app.route("/puppy-api-example", methods=["GET", "POST"])
+def pup_api():
+    url = "http://adopt-puppy.herokuapp.com/shelters/.json"
+    response = requests.get(url)
+    shelters = response.json()
+    return render_template("pup-api.html", shelters=shelters)
