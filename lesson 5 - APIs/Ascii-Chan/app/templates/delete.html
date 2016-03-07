@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>You sure you want to delete <u>{{ delete_artwork.title }}</u>?</h2>
-<form method="post" action="">
-    <input class="btn btn-danger" type="submit" value="Delete Item">
-    <a class="btn btn-default" href="/">Cancel</a>
-</form>
+<div class="row">
+	<div class="col-md-12">
+		<h1 class="text-center">You sure you want to delete <u>{{ delete_artwork.title }}</u>?</h1>
+		<form method="post" action="" class="delete text-center">
+		    <input class="btn front-button" type="submit" value="Delete Item">
+		    <a class="btn blue" href="/">Cancel</a>
+		</form>
+	</div>
+</div>
+<div id="wrap"></div>
 {% endblock %}

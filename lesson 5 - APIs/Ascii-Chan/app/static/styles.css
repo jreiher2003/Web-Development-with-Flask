@@ -15,8 +15,11 @@ nav, footer {
 	background-color: #0B162A;
 	color: #C83803;
 }
-a, pre, nav a, h2 {
+a, pre, nav a, h2, u {
 	color: #C83803;
+}
+a:hover, nav a:hover {
+	color: #0B162A;
 }
 footer p {
 	padding: 45px 0 20px 0;
@@ -31,4 +34,17 @@ footer p {
 }
  img, pre, .thumbnail {
  	border: 1px solid #0B162A;
+ }
+ .blue {
+ 	background-color: #061922;
+ 	color: #fff;
+ }
+ .blue:hover, a span:hover {
+ 	color: #C83803;
+ }
+ .delete {
+ 	margin-bottom: 180px;
+ }
+ a.navbar-brand:hover {
+ 	color: #C83803;
  }
