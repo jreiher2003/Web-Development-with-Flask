@@ -9,10 +9,19 @@
 	<title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+	<nav class="navbar">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="{{ url_for('hello') }}">Composite</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li><a href="{{ url_for('hello') }}">Home</a></li>
+				<li><a href="{{ url_for('ajax') }}">Ajax Example</a></li>
+				<li><a href="{{ url_for('pup_api') }}">Puppy API Example</a></li>
+			</ul>
+		</div>
+	</nav>
 <div class="container">
-	<a href="{{ url_for('hello') }}">Home</a>
-	<a href="{{ url_for('ajax') }}">Ajax Example</a>
-	<a href="{{ url_for('pup_api') }}">Puppy API Example</a>
 	<div class="row">
 		<div class="col-md-12">
 			{% with messages = get_flashed_messages(with_categories=true) %}
@@ -32,6 +41,12 @@
 		</div>
 	</div>
 </div><!-- end container -->
+<div id="wrap"></div>
+<footer class="footer">
+	<div class="container">
+		<p class="text-center">Copyright &#169; Composite.com 2016</p>
+	</div>
+</footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="{{ url_for('static', filename='script.js') }}"></script>
