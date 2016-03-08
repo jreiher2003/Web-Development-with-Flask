@@ -13,9 +13,10 @@ function loadData() {
     // load streetview
     var streetStr = $("#street").val()
     var cityStr = $("#city").val()
-    var address = streetStr + ", " + cityStr;
+    var stateStr = $("#state").val()
+    var address = streetStr + ", " + cityStr + ", " + stateStr;
 
-    $greeting.text("So, you want to live at " + address + "?");
+    $greeting.text("Here is some information about " + address + ".");
 
     var streetviewUrl = "https://maps.googleapis.com/maps/api/streetview?size=400x200&location=" + address + "";
 
@@ -25,7 +26,7 @@ function loadData() {
     var KEY = "&sort=newest&api-key=53ac231dce440f01b73fcdda60cccc59:4:70248560"
     var URL = API + cityStr + KEY
     $.getJSON(URL, function( data ) {
-        $nytHeaderElem.text("New York Times Articles About " + cityStr);
+        $nytHeaderElem.text("New York Times Articles About " + cityStr + ", " + stateStr);
         var articles = data.response.docs;
         for (var i = 0; i < articles.length; i++ ) {
             var article = articles[i];
