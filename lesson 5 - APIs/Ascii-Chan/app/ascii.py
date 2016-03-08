@@ -10,8 +10,7 @@ from flask import render_template, request, url_for, redirect, flash
 
 IP_URL = "http://ip-api.com/json/"
 def get_coords(ip):
-    ip = "4.2.2.2"
-    ip = "23.24.209.141"
+    ip = ""
     url = IP_URL + ip
     content = None
     content = urllib2.urlopen(url).read()
