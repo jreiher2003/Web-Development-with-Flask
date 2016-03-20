@@ -60,7 +60,7 @@ print gets('x')
 print cas('x', 3, 0)
 #>>> False
 #
-print cas('x', 4, 2105051955)
+print cas('x', 4, )
 #>>> True
 #
 print get('x')
