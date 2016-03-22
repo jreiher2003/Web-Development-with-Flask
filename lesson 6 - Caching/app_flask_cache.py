@@ -7,7 +7,7 @@ from flask.ext.cache import Cache
 app = Flask(__name__)
 
 # define the cache config keys, remember that it can be done in a settings file
-app.config['CACHE_TYPE'] = 'simple'
+app.config['CACHE_TYPE'] = 'memcached'
 
 # register the cache instance and binds it on to your app 
 app.cache = Cache(app)   
